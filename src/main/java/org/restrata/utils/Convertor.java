@@ -1,5 +1,6 @@
 package org.restrata.utils;
 
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -36,6 +37,11 @@ public class Convertor {
         return null;
     }
 
+    public List<JSONObject> convertS3ObjectInputStreamToJsonList(S3ObjectInputStream dataStream) throws IOException {
+        XSSFWorkbook workbook = new XSSFWorkbook(dataStream);
+        return convertWorkBookToJsonList(workbook);
+    }
+
     private List<JSONObject> convertFileInputStreamToJsonList(FileInputStream dataStream) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook(dataStream);
         return convertWorkBookToJsonList(workbook);
@@ -57,7 +63,12 @@ public class Convertor {
                 XSSFRow row = sheet.getRow(i);
                 JSONObject rowJson = new JSONObject();
                 for(int j=0;j<propertyCount;j++) {
-                    rowJson.put(header.getCell(j).toString(), row.getCell(j).toString());
+                    rowJson.put(
+                            header.getCell(j).toString().toLowerCase()
+                                    .replaceAll(" ","_")
+                                    .replaceAll("-","_")
+                                    .replaceAll("/","_"),
+                            row.getCell(j).toString());
                 }
                 results.add(rowJson);
             }catch (Exception ignore){}

@@ -1,0 +1,16 @@
+s3:
+  bucket:
+      accessKey: xxxxxxxxxxxxxxxxxxxxxxxx
+      secretKey: xxxxxxxxxxxxxxxxxxxxxxxx
+      bucketName: xxxxxxxxxxxxxxxxxxxxxxxx
+      bucketRegion: us-east-1
+      dirUpload: upload
+      dirStatus: uploads_status
+      dirProcessed: processed
+      dirError: error
+  sns:
+      topic:
+          arn: xxxxxxxxxxxxxxxxxxxxxxxx
+      queue:
+          name: DevRiskUploadNotificationQueue
+          arn: xxxxxxxxxxxxxxxxxxxxxxxx

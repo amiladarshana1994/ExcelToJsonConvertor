@@ -8,4 +8,6 @@ public class FileReader {
     public FileInputStream readFileFromPath(String filePath) throws FileNotFoundException {
         return new FileInputStream(new File(filePath));
     }
+
+
 }
